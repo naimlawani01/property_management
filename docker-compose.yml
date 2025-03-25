@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  # Service Django
+  web:
+    build: .
+    command: ["gunicorn", "-b", "0.0.0.0:8000", "--reload", "config.wsgi:application"]
+    volumes:
+      - .:/app  # Synchronisation des fichiers
+      - static_volume:/app/static  # Volume pour les fichiers statiques
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DEBUG=${DEBUG}  # Charge depuis .env
+      - DATABASE_URL=${DATABASE_URL}  # Charge depuis .env
+
+  # Service PostgreSQL
+  db:
+    image: postgres:13
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}  # Charge depuis .env
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}  # Charge depuis .env
+      - POSTGRES_DB=${POSTGRES_DB}  # Charge depuis .env
+
+  # Service pgAdmin
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}  # Charge depuis .env
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}  # Charge depuis .env
+    ports:
+      - "5050:80"  # Expose pgAdmin sur le port 5050
+    depends_on:
+      - db
+
+# Volumes pour persister la base de données et les fichiers statiques
+volumes:
+  postgres_data:
+  static_volume:
