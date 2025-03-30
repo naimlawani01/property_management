@@ -1,0 +1,2 @@
+## pour creer une branche avec la ligne de commande 
+" git checkout -b + Nom de la branche "
