@@ -1,2 +1,10 @@
 ## pour creer une branche avec la ligne de commande 
 " git checkout -b + Nom de la branche "
+
+Changer de branche
+git checkout Nom_de_la_branche
+
+Mettre le travail d'une branche X sur la branche main
+1- etre d'abord dans la branche main
+2- git merge Nom_de_la_branche
+3-git push origin main 
