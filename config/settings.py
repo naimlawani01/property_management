@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'apps.leases',
     'apps.payments',
     'apps.reports',
+    
 ]
 
 MIDDLEWARE = [
@@ -130,3 +131,5 @@ STATIC_ROOT = "/staticfiles"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
