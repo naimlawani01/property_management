@@ -11,8 +11,13 @@ services:
     depends_on:
       - db
     environment:
-      - DEBUG=${DEBUG}  # Charge depuis .env
-      - DATABASE_URL=${DATABASE_URL}  # Charge depuis .env
+      DEBUG: ${DEBUG}  
+      DATABASE_URL: ${DATABASE_URL}  
+      POSTGRES_USER: ${POSTGRES_USER} 
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD} 
+      POSTGRES_DB: ${POSTGRES_DB} 
+      DATABASE_HOST: ${DATABASE_HOST} 
+      DATABASE_PORT: ${DATABASE_PORT}  
 
   # Service PostgreSQL
   db:
@@ -20,9 +25,9 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_USER=${POSTGRES_USER}  # Charge depuis .env
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}  # Charge depuis .env
-      - POSTGRES_DB=${POSTGRES_DB}  # Charge depuis .env
+      POSTGRES_USER: ${POSTGRES_USER}  # Charge depuis .env
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}  # Charge depuis .env
+      POSTGRES_DB: ${POSTGRES_DB}  # Charge depuis .env
 
   # Service pgAdmin
   pgadmin:
