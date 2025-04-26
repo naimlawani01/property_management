@@ -1,13 +1,14 @@
-from rest_framework import serializers # type: ignore
+from rest_framework import serializers
+
+from apps.properties.serializers import PropertySerializer
 from .models import Lease
+from apps.properties.models import Property
+from apps.users.models import CustomUser
 
 class LeaseSerializer(serializers.ModelSerializer):
+    property = PropertySerializer(read_only=True)
+    tenant = serializers.SlugRelatedField(queryset=CustomUser.objects.all(), slug_field='username')
+
     class Meta:
         model = Lease
-        fields = '__all__'
-
-    def validate(self, data):
-        """ Vérifie que la date de début est bien avant la date de fin """
-        if data['date_debut'] >= data['date_fin']:
-            raise serializers.ValidationError("La date de début doit être avant la date de fin.")
-        return data
+        fields = ['id', 'property', 'tenant', 'start_date', 'end_date', 'rent_amount', 'is_active']
